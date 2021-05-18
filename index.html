@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Screen Reader Messaging with aria-live</title>
+	<title>Screen Reader Messaging with ARIA Live Regions</title>
 
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/local.css">
@@ -23,17 +23,161 @@
 				Skip to main content
 			</a>
 		</banner>
+		<h1 class="page-centered-content">Screen Reader Messaging</h1>
 	</header>
 	<main id="main" class="page-centered-content">
-		<br/>
-		<button id="speak-trigger">Say current seconds</button>
+		<p>
+			Sometimes, a web page may needto provide a message to assistive 
+			technologies that an event happened. For example, if a data table
+			was resorted based on a column, a screen reader should be informed 
+			the table was successfully resorted. In general, any dynamic action
+			that shows visual evidence may need to provide confirmation.
+			
+			The Screen Reader Messaging (SRM) library provides a straightforward 
+			means of passing a message to screen readers and other assistive 
+			technologies via a visually hidden live region using the two ARIA
+			attributes <code class="language-html">aria-live</code> and 
+			<code class="language-html">aria-atomic</code>.
+		</p>
+
+		<h2>Basic Usage</h2>
+		<p>
+			The SRM library is designed for easy, straightforward deployment. 
+			One needs to only include the small script file:
+		</p>
+
+<pre><code class="language-html">&lt;script src="dist/sr-messaging.js"&gt;&lt;/script&gt;</code></pre>
+
+		<p>
+			Whenever a message needs to be sent to a screen reader, just grab
+			the SRM messenger object and use the <code>say()</code> method to
+			deliver the message:
+		</p>
+<pre><code class="language-js">let srm = ScreenReaderMessenger.getMessenger()
+srm.say('Hello World!');</code></pre>
+		
+		<h2>Example</h2>
+		<p> 
+			The following demonstrates the screen reader messaging utility. 
+			Clicking the button returns the current seconds in the current
+			time. This message is conveyed in three ways:
+		</p>
+		<ul>
+			<li>The message "Seconds are #" is conveyed via the SRM to any
+				active screen readers.
+			</li>
+			<li>The same message is logged in the textbox for debugging 
+				purposes.
+			</li>
+			<li>The same message is also logged to the console in the 
+				browser's developer tools.
+			</li>
+		</ul>
+		
+		<div id="example">
+			<button id="speak-trigger">Say current seconds</button>
+			<textarea id="debug-log" rows="2" cols="25"></textarea>
+		</div>
+		
+		<p>
+			The overall code for implementing the example is straightforward.
+			More lines were needed to implement the timestamp formatting for 
+			the debug log! If the debugging feedback was not included, the 
+			code could be simplified to the following vanilla HTML 
+			and JavaScript:
+		</p>
+<pre><code class="language-html">&lt;head&gt;
+	...
+	&lt;script src="dist/sr-messaging.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	...
+	&lt;script&gt;
+		window.onload = function() {
+			document.getElementById('speak-trigger').addEventListener('click', function(evt) {
+				let d = new Date();
+				ScreenReaderMessenger.getMessenger().say('Seconds are ' + d.getSeconds();
+			});
+		}
+	&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+		
+		<h2>How it Works</h2>
+		<p>
+			The SRM library is designed for easy, straightforward deployment. 
+			One needs to only include the small script file:
+		</p>
+
+<pre><code class="language-html">&lt;script src="dist/sr-messaging.js"&gt;&lt;/script&gt;</code></pre>
+		
+		<p>
+			Once the page is loaded, an additional DIV element is appended to 
+			the DOM. This DIV element will temporarily contain the text of the
+			messages. 
+		</p>
+		<p>
+			The DIV uses CSS so that only screen readers can become aware 
+			of its existence. This styling is similar to other common
+			<a href="https://webaim.org/techniques/css/invisiblecontent/">CSS 
+			for invisible content for screen reader users</a>. As it is
+			positioned absolutely, it should not impact the layout of any
+			site. The CSS also has extensive (and arguably necessary) usage
+			of the <strong><code>!important</code></strong> property to
+			greatly reduce any styles undoing its impact.
+		</p>
+			The DIV is also an 
+			<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions">ARIA
+			live region</a>. Because it uses the <a href="https://www.w3.org/TR/2017/REC-wai-aria-1.1-20171214/#aria-atomic">aria-atomic</a>, it will fire 
+			</li>
+		</ul>
+				
+				
+		
+
+
+		<h2>Acknowledgements</h2>
+		Particular thanks goes to Alex Umstead for develop his 
+		<a href="https://codepen.io/mra11yx/pen/PoNVyMp">codepen for
+		testing ARIA live regions</a> and his conversations about the
+		code itself.
+
+		
+		
+		
+		
 	</main>
 	<footer>
 		<div class="page-centered-content">
 			A footer of something. Perhaps a leg?
 		</div>
 	</footer>
+	<script>
+		window.onload = function() {
+			document.getElementById('debug-log').value = '';
+		
+			document.getElementById('speak-trigger').addEventListener('click', function(evt) {
+				let d = new Date();
+				let msg = 'Seconds are ' + d.getSeconds();
 
+				ScreenReaderMessenger.getMessenger().say(msg);
+				console.log(msg);
+				let log = document.getElementById('debug-log').value;
+				document.getElementById('debug-log').value = 
+					formatTime(d) + ' : ' + msg + '\n' + log;
+			});
+		}
+		
+		function formatTime(d) {
+			// format current Date object time into readable
+			let H = d.getHours();
+			H = (H < 10 ? '0' : '') + H;
+			let M = d.getMinutes();
+			M = (M < 10 ? '0' : '') + M;
+			let S = d.getSeconds();
+			S = (S < 10 ? '0' : '') + S;
+			return H + ':' + M + ':' + S;
+		}
+	</script>
 
 </body>
 </html>

@@ -4,34 +4,41 @@ var ScreenReaderMessenger = (function() {
 	function createMessenger() {
 		let srm = new Object();
 		srm.globalTimer = null;
-		srm.speakRegion = createSpeakRegion(); //document.getElementById('speak');
-		srm.sendMessage = function(msg) {
+		// create the div that will contain messages
+		srm.speakRegion = createSpeakRegion(); 
+
+		srm.say = function(msg) {
+			// How many milliseconds until the message is erased from the speaking region
+			ERASE_DELAY = 5000;
+			
 			if(srm.speakRegion === null) {
-				srm.speakRegion = createSpeakRegion(msg + ' at create');
+				srm.speakRegion = createSpeakRegion(msg);
 			}
 			//reset the global timer
 			srm.globalTimer = clearTimeout(srm.globalTimer); 
 			//clear the live region's value
 			if(srm.speakRegion.innerText .length != 0)
 				srm.speakRegion.innerText = '';
-			//add text in.
+			//add message text
 			srm.speakRegion.innerText = msg
-			//and remove after 5 seconds
+			//and remove after predefined time.
 			srm.globalTimer = setTimeout(()=> {
-				console.log('clearing');
 				srm.speakRegion.innerText = '';
-			},5000);
+			}, ERASE_DELAY);
 		};
 		
 		return srm;
 	}
 	
-	function createSpeakRegion(msg = '') {
+	function createSpeakRegion() {
 		let e = document.createElement('DIV');
+		// CSS is standard offscreen placement for screen readers only
+		// All values are set to !important to reduce the chance of being
+		// accidentally overridden. 
 		e.style.cssText = 'position: absolute !important; clip: rect(1px, 1px, 1px, 1px) !important; padding: 0 !important; border: 0 !important; height: 1px !important; width: 1px !important; overflow: hidden !important;'
 		e.setAttribute('aria-live','polite');
 		e.setAttribute('aria-atomic','true');
-		e.innerText = msg;
+		e.innerText = '';
 		document.body.appendChild(e);
 		return e;
 	}
@@ -46,16 +53,9 @@ var ScreenReaderMessenger = (function() {
 	};
 })();
 
+// initiate the messenger singleton on page load to give time
+// for the aria-live region to be registered
 window.onload = function() {
 	// initiate the messenger
 	let srm = ScreenReaderMessenger.getMessenger();
-	
-	
-	document.getElementById('speak-trigger').addEventListener('click', function(evt) {
-		let d = new Date();
-		let srm = ScreenReaderMessenger.getMessenger();
-		let x = d.getSeconds();
-		console.log(x);
-		srm.sendMessage('Seconds are ' + x);
-	})
 }
