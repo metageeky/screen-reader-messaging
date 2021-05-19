@@ -148,6 +148,7 @@ code {
 p > code[class*="language-"] {
 	white-space: nowrap !important;
 	border: 0 !important;
+	padding: 0 !important;
 }
 
 .offscreen {
@@ -237,7 +238,10 @@ p > code[class*="language-"] {
 
 /* anchored headings */
 .header-anchor {
-	margin: 1.5rem 0 0.5rem;
+	margin-top: 1.5rem;
+	margin-bottom: 0.625rem;
+	margin-left: -4px;
+	margin-right: 0;
 	position: relative;
 }
 .header-anchor h2,
@@ -262,6 +266,9 @@ p > code[class*="language-"] {
 	transform: translate(0,-50%);
 }
 @media screen and (min-width: 975px) {
+	.header-anchor {
+		margin-left: 0;
+	}
 	.header-anchor h2,
 	.header-anchor h3 {
 		margin-left: 0;
@@ -298,3 +305,28 @@ p > code[class*="language-"] {
 }
 
 
+/* table of contents */
+#toc {
+	border: solid 1px #222;
+	padding: 0.75rem;
+	margin-bottom: 0.75rem;
+}
+#toc h2 {
+	font-size: 1rem;
+	margin: 0;
+}
+#toc ul {
+	margin: 0;
+	padding-left: 1.125rem;
+}
+#toc li {
+	margin-top: 0.25rem;
+}
+
+@media screen and (min-width: 650px) {
+	#toc {
+		float: right;
+		margin-left: 1rem;
+		margin-bottom: 0.5rem;
+	}
+}

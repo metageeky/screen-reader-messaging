@@ -34,7 +34,41 @@
 		</banner>
 		<h1 class="page-centered-content">Screen Reader Messaging</h1>
 	</header>
+	
+
 	<main id="main" class="page-centered-content">
+		<div id="toc">
+			<h2>Table of Contents</h2>
+			<ul>
+				<li>
+					<a href="#Usage">Basic Usage</a>
+					<ul>
+						<li>
+							<a href="#Demonstration">Demonstration</a>
+						</li>
+						<li>
+							<a href="#UsageNotes">Additional Usage Notes</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#HowItWorks">How It Works</a>
+					<ul>
+						<li>
+							<a href="#LiveRegion">Creating an ARIA Live Region</a>
+						</li>
+						<li>
+							<a href="#MessengerObject">The ScreenReaderMessenger Object</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#Acknowledgements">Acknowledgments</a>
+				</li>
+			</ul>
+		
+		</div>
+
 		<p>
 			Sometimes, a web page may needto provide a message to assistive 
 			technologies that an event happened. For example, if a data table
@@ -50,10 +84,10 @@
 		</p>
 
 		<div class="header-anchor">
-			<h2 id="usage">
+			<h2 id="Usage">
 				Basic Usage
 			</h2>
-			<a href="#usage">
+			<a href="#Usage">
 				<svg><use xlink:href="#icon-link"></use></svg>
 				<span>Basic Usage Anchor Link</span>
 			</a>
@@ -82,12 +116,12 @@ srm.say('Hello World!');</code></pre>
 		</p>
 
 		<div class="header-anchor">
-			<h3 id="demo">
+			<h3 id="Demonstration">
 				Demonstration
 			</h3>
-			<a href="#demo">
+			<a href="#Demonstration">
 				<svg><use xlink:href="#icon-link"></use></svg>
-				<span>Basic Usage Anchor Link</span>
+				<span>Demonstration Anchor Link</span>
 			</a>
 		</div>
 		<p> 
@@ -140,7 +174,15 @@ srm.say('Hello World!');</code></pre>
 			so desired.
 		</p>
 		
-		<h3>Additional Usage Notes</h3>
+		<div class="header-anchor">
+			<h3 id="UsageNotes">
+				Additional Usage Notes
+			</h3>
+			<a href="#UsageNotes">
+				<svg><use xlink:href="#icon-link"></use></svg>
+				<span>Additional Usage Notes Anchor Link</span>
+			</a>
+		</div>
 		<ul>
 			<li>This library should only be used for informing of minor events
 				to screen readers, such as a table being resorted or multiple
@@ -164,12 +206,12 @@ srm.say('Hello World!');</code></pre>
 		</ul>
 		
 		<div class="header-anchor">
-			<h2 id="works">
+			<h2 id="HowItWorks">
 				How it Works
 			</h2>
-			<a href="#works">
+			<a href="#HowItWorks">
 				<svg><use xlink:href="#icon-link"></use></svg>
-				<span>Basic Usage Anchor Link</span>
+				<span>How It Works Anchor Link</span>
 			</a>
 		</div>
 		<p>
@@ -178,7 +220,15 @@ srm.say('Hello World!');</code></pre>
 			object that coordinates updating and timing of the message.
 		</p>
 		
-		<h3>Creating an ARIA Live Region</h3>
+		<div class="header-anchor">
+			<h3 id="LiveRegion">
+				Creating an ARIA Live Region
+			</h3>
+			<a href="#LiveRegion">
+				<svg><use xlink:href="#icon-link"></use></svg>
+				<span>Creating an ARIA Live Region Anchor Link</span>
+			</a>
+		</div>
 		<p>
 			Once the page is loaded, the SRM appends a DIV element to the
 			DOM. This DIV element will temporarily contain the text of the
@@ -211,7 +261,15 @@ srm.say('Hello World!');</code></pre>
 			<code class="language-html">role="alert"</code> situation.
 		</p>
 		
-		<h3>The ScreenReaderMessenger Object</h3>
+		<div class="header-anchor">
+			<h3 id="MessengerObject">
+				The ScreenReaderMessenger Object
+			</h3>
+			<a href="#MessengerObject">
+				<svg><use xlink:href="#icon-link"></use></svg>
+				<span>The ScreenReaderMessenger Object Anchor Link</span>
+			</a>
+		</div>
 		<p>
 			Just creating a live region is not enough to provide dynamic 
 			messaging to screen readers. The ARIA live region we created
@@ -248,8 +306,15 @@ srm.say('Hello World!');</code></pre>
 			the erase delay.
 		</p>
 
-
-		<h2>Acknowledgements</h2>
+		<div class="header-anchor">
+			<h2 id="Acknowledgements">
+				Acknowledgements
+			</h2>
+			<a href="#Acknowledgements">
+				<svg><use xlink:href="#icon-link"></use></svg>
+				<span>Acknowledgements Anchor Link</span>
+			</a>
+		</div>
 		Particular thanks goes to Alex Umstead for develop his 
 		<a href="https://codepen.io/mra11yx/pen/PoNVyMp">codepen for
 		testing ARIA live regions</a> and his conversations about the
@@ -260,6 +325,8 @@ srm.say('Hello World!');</code></pre>
 		
 		
 	</main>
+	
+	
 	<footer>
 		<div class="page-centered-content">
 			A footer of something. Perhaps a leg?
