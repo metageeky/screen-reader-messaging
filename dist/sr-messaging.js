@@ -36,8 +36,11 @@ var ScreenReaderMessenger = (function() {
 		// All values are set to !important to reduce the chance of being
 		// accidentally overridden. 
 		e.style.cssText = 'position: absolute !important; clip: rect(1px, 1px, 1px, 1px) !important; padding: 0 !important; border: 0 !important; height: 1px !important; width: 1px !important; overflow: hidden !important;'
+		// make the div a live region
 		e.setAttribute('aria-live','polite');
 		e.setAttribute('aria-atomic','true');
+		// this is admittedly the default but just in case standards change
+		e.setAttribute('aria-relevant','additions text');
 		e.innerText = '';
 		document.body.appendChild(e);
 		return e;
@@ -55,7 +58,7 @@ var ScreenReaderMessenger = (function() {
 
 // initiate the messenger singleton on page load to give time
 // for the aria-live region to be registered
-window.onload = function() {
+window.addEventListener('load', function(event) { 
 	// initiate the messenger
 	let srm = ScreenReaderMessenger.getMessenger();
-}
+});

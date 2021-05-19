@@ -17,6 +17,15 @@
 </head>
 
 <body>
+	<div id="hiddenStuff" aria-hidden="true" hidden>
+		<svg aria-hidden="true" focusable="false" id="icons" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<symbol id="icon-link" viewBox="0 0 32 32"  xml:space="preserve">
+			<g stroke="currentColor" fill="currentColor" >
+				<path d="M11 5v6H5v2h6v6H5v2h6v6h2v-6h6v6h2v-6h6v-2h-6v-6h6v-2h-6V5h-2v6h-6V5zm2 8h6v6h-6z"/>
+			</g>
+		</svg>
+	</div>
+
 	<header>
 		<banner>
 			<a class="skipnavlink offscreen" href="#main">
@@ -40,7 +49,15 @@
 			<code class="language-html">aria-atomic</code>.
 		</p>
 
-		<h2>Basic Usage</h2>
+		<div class="header-anchor">
+			<h2 id="usage">
+				Basic Usage
+			</h2>
+			<a href="#usage">
+				<svg><use xlink:href="#icon-link"></use></svg>
+				<span>Basic Usage Anchor Link</span>
+			</a>
+		</div>
 		<p>
 			The SRM library is designed for easy, straightforward deployment. 
 			One needs to only include the small script file:
@@ -53,10 +70,26 @@
 			the SRM messenger object and use the <code>say()</code> method to
 			deliver the message:
 		</p>
-<pre><code class="language-js">let srm = ScreenReaderMessenger.getMessenger()
+<pre><code class="language-js">let srm = ScreenReaderMessenger.getMessenger();
 srm.say('Hello World!');</code></pre>
 		
-		<h2>Example</h2>
+		<p>
+			The SRM library uses the 
+			<a href="https://www.dofactory.com/javascript/design-patterns/singleton">singleton
+			pattern</a>, meaning there is only screen reader messaging service available at
+			any time. Each time you call getMessenger(), you will receive the same SRM
+			object. 
+		</p>
+
+		<div class="header-anchor">
+			<h3 id="demo">
+				Demonstration
+			</h3>
+			<a href="#demo">
+				<svg><use xlink:href="#icon-link"></use></svg>
+				<span>Basic Usage Anchor Link</span>
+			</a>
+		</div>
 		<p> 
 			The following demonstrates the screen reader messaging utility. 
 			Clicking the button returns the current seconds in the current
@@ -101,38 +134,119 @@ srm.say('Hello World!');</code></pre>
 		}
 	&lt;/script&gt;
 &lt;/body&gt;</code></pre>
-		
-		<h2>How it Works</h2>
-		<p>
-			The SRM library is designed for easy, straightforward deployment. 
-			One needs to only include the small script file:
-		</p>
 
-<pre><code class="language-html">&lt;script src="dist/sr-messaging.js"&gt;&lt;/script&gt;</code></pre>
-		
 		<p>
-			Once the page is loaded, an additional DIV element is appended to 
-			the DOM. This DIV element will temporarily contain the text of the
-			messages. 
+			Note how you can chain the getMessenger() and say() methods if 
+			so desired.
+		</p>
+		
+		<h3>Additional Usage Notes</h3>
+		<ul>
+			<li>This library should only be used for informing of minor events
+				to screen readers, such as a table being resorted or multiple
+				disclosure panels being opened or closed en masse. It is NOT
+				for reporting critical events such as alerts.
+			</li>
+			<li>As a rule of thumb, no messaging is necessary for interactions
+				that leave some evidence of happening. For example, opening or
+				closing a disclosure that sets <code>aria-expanded</code> does
+				not need additional messaging. 
+			</li>
+			<li>Any and all messages should be short and concise so that
+				they can be read within a window of time. The default duration
+				for this window is 5 seconds.
+			</li>
+			<li>Do not send too many messages. If multiple messages are triggered
+				at the same time, they will interfere and overwrite each other. 
+				This was a deliberate design choice to deter spamming screen
+				reader users.
+			</li>
+		</ul>
+		
+		<div class="header-anchor">
+			<h2 id="works">
+				How it Works
+			</h2>
+			<a href="#works">
+				<svg><use xlink:href="#icon-link"></use></svg>
+				<span>Basic Usage Anchor Link</span>
+			</a>
+		</div>
+		<p>
+			The SRM library functions through the coordination of a DIV
+			that is an ARIA live region and the ScreenReaderMessenger 
+			object that coordinates updating and timing of the message.
+		</p>
+		
+		<h3>Creating an ARIA Live Region</h3>
+		<p>
+			Once the page is loaded, the SRM appends a DIV element to the
+			DOM. This DIV element will temporarily contain the text of the
+			messages. Importantly, this DIV is styled so that it is shown
+			to only screen reader users. If the DIV was hidden using techniques
+			like <code class="language-css">display:none</code>, messaging
+			would not work. 
 		</p>
 		<p>
-			The DIV uses CSS so that only screen readers can become aware 
-			of its existence. This styling is similar to other common
+			This DIV's "invisible" styling is similar to other common
 			<a href="https://webaim.org/techniques/css/invisiblecontent/">CSS 
 			for invisible content for screen reader users</a>. As it is
 			positioned absolutely, it should not impact the layout of any
 			site. The CSS also has extensive (and arguably necessary) usage
-			of the <strong><code>!important</code></strong> property to
-			greatly reduce any styles undoing its impact.
+			of the <code>!important</code> property to
+			greatly reduce any styles undoing the invisibility.
 		</p>
+		<p>
 			The DIV is also an 
 			<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions">ARIA
-			live region</a>. Because it uses the <a href="https://www.w3.org/TR/2017/REC-wai-aria-1.1-20171214/#aria-atomic">aria-atomic</a>, it will fire 
-			</li>
-		</ul>
-				
-				
+			live region</a>. Through the combined used of the ARIA attributes 
+			<code class="language-html">aria-live="polite"</code> and 
+			<code class="language-html">aria-atomic="true"</code>, the browser 
+			will inform screen readers of any non-empty updates to the DIV's 
+			text. Note that this live region is <em>polite</em> in that
+			the message will not interrupt any other messages from the screen 
+			reader. The live region is also not given an ARIA role as none of
+			the currently available roles are appropriate. This messaging library
+			should NOT be used for critical announcements that would fall under a
+			<code class="language-html">role="alert"</code> situation.
+		</p>
 		
+		<h3>The ScreenReaderMessenger Object</h3>
+		<p>
+			Just creating a live region is not enough to provide dynamic 
+			messaging to screen readers. The ARIA live region we created
+			only announces additions to the text content but NOT any 
+			deletions. This works to our advantage. When the <code>say()</code>
+			method is called, the DIV's text content is initially reset to
+			the empty string. This does not get announced because it is 
+			not an addition to the text. Then, the message is placed in
+			the DIV. This triggers the live region to inform the screen
+			reader of the new content. This also means that the same
+			text message can be communiciated multiple times as the 
+			reset then update process always triggers an addition.
+		</p>
+		<p>
+			However, there is a problem with this approach. Because the
+			DIV's content is not hidden to everyone, that text may be found
+			inconveniently through actions such as selecting all the text
+			or using a browser's find in page features. Thus, it is prudent
+			to always erase the DIV's text content eventually. The timing of 
+			this is tricky, though. Some screen readers will
+			cease reading the text if it is deleted while being outputted.
+			Thus, you need to delay the erasing using a call to the 
+			<code>setTimeout</code> method in JavaScript. 
+		</p>
+		<p>
+			The SRM handles this delayed erasing as well as making sure
+			no erroneous timeouts accidentally erase the text while it
+			is being read out loud. The internal variable 
+			<code>ERASE_DELAY</code> defines the delay, currently set to
+			5000 milliseconds (5 seconds). This delay mostly suffices
+			assuming that any message is concise enough. However, if 
+			the screen reader's speech rate is set too slow, messages
+			may be cut off. If users report this is a problem, increase
+			the erase delay.
+		</p>
 
 
 		<h2>Acknowledgements</h2>
@@ -152,7 +266,7 @@ srm.say('Hello World!');</code></pre>
 		</div>
 	</footer>
 	<script>
-		window.onload = function() {
+		window.addEventListener('load', function(event) {
 			document.getElementById('debug-log').value = '';
 		
 			document.getElementById('speak-trigger').addEventListener('click', function(evt) {
@@ -165,7 +279,7 @@ srm.say('Hello World!');</code></pre>
 				document.getElementById('debug-log').value = 
 					formatTime(d) + ' : ' + msg + '\n' + log;
 			});
-		}
+		});
 		
 		function formatTime(d) {
 			// format current Date object time into readable
