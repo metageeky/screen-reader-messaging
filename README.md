@@ -27,3 +27,6 @@ ScreenReaderMessenger.getMessenger().say('Polly want a cracker');
 * This library should only be used for informing of minor events to screen readers, such as a table being resorted or multiple disclosure panels being opened or closed en masse. It is NOT for reporting critical events such as alerts. 
 * As a rule of thumb, no messaging is necessary for interactions that leave some evidence of happening. For example, opening or closing a disclosure that sets aria-expanded does not need additional messaging. 
 * Do not send too many messages. If multiple messages are triggered at the same time, they will interfere and overwrite each other. This was a deliberate design choice to deter spamming screen reader users.
+
+## License
+This code is released under the [Mozilla Public License Version 2.0](https://www.mozilla.org/en-US/MPL/2.0/).
