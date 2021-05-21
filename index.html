@@ -126,6 +126,9 @@
 	<pre><code class="language-html">&lt;script src="dist/sr-messaging.js"&gt;&lt;/script&gt;</code></pre>
 
 			<p>
+				After a short (&lt1s) delay after page load for the browser's
+				accessibility tree to recognize the added ARIA live region, the
+				messaging service is ready for use.
 				Whenever a message needs to be sent to a screen reader, just grab
 				the SRM messenger object and use the <code>say()</code> method to
 				deliver the message:
