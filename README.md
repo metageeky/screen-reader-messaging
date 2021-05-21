@@ -10,7 +10,10 @@ The SRM library consists of a single JavaScript library found in the `/dist/` fo
 <script src="sr-messaging.js"></script>
 ```
 
-Upon page load, the SRM library will be available for use:
+Shortly after page load, the SRM library will be available for use. A slight delay (usually <1 second) is needed for the accessibility tree to recognize the ARIA-live region added to the DOM by the script. 
+
+Using the script involves requesting the messaging object and then directing a message to it:
+
 ```
 let srm = ScreenReaderMessenger.getMessenger();
 srm.say('Hello World!');
