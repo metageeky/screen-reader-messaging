@@ -7,6 +7,8 @@
 	--h3-font-size: 1.25rem;
 	
 	--blue: #0018a8;
+	--green: #62B300;
+	--darkgreen: #284900;
 	--yellow: #ffd700;
 	--darkgrey: #404040;
 	--darkred: #7C0A02;
@@ -371,5 +373,7 @@ p > code[class*="language-"] {
 		margin-bottom: 0.5rem;
 	}
 }
+
+
 
 
